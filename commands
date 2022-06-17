@@ -1,0 +1,8 @@
+terminal :
+mysql -h localhost -u root -p
+passWord: *****
+
+show databases: mostrar banco de dados.
+show tables: mostrar tabelas.
+use "nome tabela": seleciona a tabela.
+describe "nome tabela": mostrar valores da tabela.
