@@ -8,7 +8,12 @@ const Postagem = require('./models/Post')
 
 //config 
 //template engine
-app.engine('handlebars', handlebars.engine({defaultLayout: 'main'}))
+app.engine('handlebars', handlebars.engine({defaultLayout: 'main',
+runtimeOptions: {
+    allowProtoMethodsByDefault: true,
+    allowProtoPropertiesByDefault: true
+}}
+))
 app.set('view engine', 'handlebars')
 app.set('views', './views')
 //Body Parser
@@ -49,7 +54,9 @@ app.post('/add', (req, res)=>{
 })
 
 app.get('/deletar/:id', (req, res)=>{
-    Postagem.destroy({where: {'id': req.params.id }})
+    Postagem.destroy({where: {'id': req.params.id }}).then(()=>{
+        res.redirect('/')
+    })
 })
 
 app.listen(8081, ()=>console.log('servidor online!'))
