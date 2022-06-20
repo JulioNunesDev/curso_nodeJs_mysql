@@ -1,7 +1,17 @@
 <form action="/add" method="POST">
-    <p>Título:</p>
-    <input type="text" name="titulo">
-    <p>Conteúdo:</p>
-    <textarea name="conteudo"></textarea>
-    <button type="submit">Cadastrar Postagem</button>
+<h1>Digite um comentário:</h1>
+<div class="textInputWrapper">
+    <input placeholder="Titulo Aqui" type="text" class="textInput" name="titulo"
+    required="true" maxlength="250">
+</div>
+
+<div class="textInputWrapper">
+    <textarea placeholder="Comentário Aqui" type="text" class="textInput text" name="conteudo"
+    required="true"
+    ></textarea>
+</div>   
+
+<div class="divBtn">
+<button type="submit">Cadastrar Postagem</button> 
+</div>
 </form>

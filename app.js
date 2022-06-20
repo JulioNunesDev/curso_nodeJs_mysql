@@ -16,6 +16,7 @@ runtimeOptions: {
 ))
 app.set('view engine', 'handlebars')
 app.set('views', './views')
+app.use(express.static('public'))
 //Body Parser
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
@@ -29,17 +30,15 @@ app.use(bodyParser.json())
 //rotas 
 
 app.get('/', (req, res)=>{
-
-        Postagem.findAll().then(function(posts) {
-            
-            res.render('home', {posts: posts})
+        Postagem.findAll().then(function(posts) {    
+            res.render('home', {posts: posts, style: 'home.css'})
       });
 
     
 })
 
 app.get('/cad', (req, res)=>{
-    res.render('formulario')
+    res.render('formulario', {title: 'Formulario', style: 'formulario.css'})
 })
 
 app.post('/add', (req, res)=>{
