@@ -1,7 +1,9 @@
 const express = require('express')
 const app = express()
 let handlebars = require('express-handlebars')
-const body = require('body-parser')
+const bodyParser = require('body-parser')
+const Postagem = require('./models/Post')
+
 
 
 //config 
@@ -10,8 +12,8 @@ app.engine('handlebars', handlebars.engine({defaultLayout: 'main'}))
 app.set('view engine', 'handlebars')
 app.set('views', './views')
 //Body Parser
-app.use(body.urlencoded({extended: false}))
-app.use(body.json())
+app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.json())
 
 //conexao com banco de dados mysql
 
@@ -21,12 +23,33 @@ app.use(body.json())
 
 //rotas 
 
+app.get('/', (req, res)=>{
+
+        Postagem.findAll().then(function(posts) {
+            
+            res.render('home', {posts: posts})
+      });
+
+    
+})
+
 app.get('/cad', (req, res)=>{
     res.render('formulario')
 })
 
 app.post('/add', (req, res)=>{
-   res.send('seus dados foram salva' + req.body.titulo + " " + req.body.conteudo) 
+   Postagem.create({
+    titulo: req.body.titulo,
+    conteudo: req.body.conteudo
+   }).then(()=>{
+    res.redirect('/')
+   }).catch((err)=>{
+    res.send('Houve um erro:' , + err)
+   }) 
+})
+
+app.get('/deletar/:id', (req, res)=>{
+    Postagem.destroy({where: {'id': req.params.id }})
 })
 
 app.listen(8081, ()=>console.log('servidor online!'))
